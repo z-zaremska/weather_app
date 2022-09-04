@@ -1,5 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Air quality</h1>
+
+<div class="bg-gradient p-5 rounded-lg m-3" style="background-color: {{status_color}}">
+    <h1 class="display-4">Air quality: {{ api.0.AQI }} ({{ api.0.Category.Name }})</h1>
+    {% if api %}
+
+        {% if api == 'Error' %}
+        <p class="lead">There was an error with zipcode {{ zipcode }} - please try again.</p>
+        
+        {% else %}
+            <p class="lead">
+            <b>Zip-code:</b> {{ zipcode }}<br>
+            <b>City:</b> {{ api.0.ReportingArea }}<br>
+            <b>Day:</b> {{ api.1.DateObserved }}
+            </p> 
+
+            <hr class="my-4">
+            <p><b>Description:</b><br>
+            {{ status_description }}</p>
+        
+        {% endif %}
+
+    {% endif %}
+</div>
+
+
 {% endblock content %}
